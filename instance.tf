@@ -18,7 +18,7 @@ module "vpc" {
 }
 
 resource "aws_security_group" "allow-ssh-web" {
-    vpc_id = "${module.vpc.id}"
+    vpc_id = module.vpc.id
     name = "allow-ssh"
 
     ingress {
@@ -56,12 +56,12 @@ resource "aws_instance" "test" {
   instance_type = "t2.micro"
   key_name      = aws_key_pair.sshkey.key_name
   subnet_id = module.vpc.public-1-id
-  vpc_security_group_ids = ["${aws_security_group.allow-ssh-web.id}"]
+  vpc_security_group_ids = [aws_security_group.allow-ssh-web.id]
 
   connection {
     host = aws_instance.test.public_ip
     user        = "ubuntu"
-    private_key = "${file("${var.PATH_TO_PRIVATE_KEY}")}"
+    private_key = file("${var.PATH_TO_PRIVATE_KEY}")
   }
 
 
