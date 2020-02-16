@@ -59,6 +59,7 @@ resource "aws_instance" "test" {
   vpc_security_group_ids = ["${aws_security_group.allow-ssh-web.id}"]
 
   connection {
+    host = aws_instance.test.public_ip
     user        = "ubuntu"
     private_key = "${file("${var.PATH_TO_PRIVATE_KEY}")}"
   }
@@ -69,10 +70,14 @@ resource "aws_instance" "test" {
     destination = "/tmp/server.py"
   }
 
-  provisioner "remote-exec" {
-    inline = [
-      "python3 /tmp/server.py &",
-    ]
+  #provisioner "remote-exec" {
+#    inline = [
+#      "sudo nohup python3 /tmp/server.py &",
+#]
+#}
+
+  provisioner "local-exec" {
+    command = "ssh -o 'StrictHostKeyChecking no' -i ${var.PATH_TO_PRIVATE_KEY} ubuntu@${aws_instance.test.public_ip} 'sudo nohup python3 /tmp/server.py </dev/null >/dev/null 2>&1 &'"
   }
 }
 
