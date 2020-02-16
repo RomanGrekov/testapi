@@ -13,4 +13,9 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag pytest:latest
     - name: Start tests
-      run: docker run -v `pwd`:/tmp/ pytest /usr/local/bin/pytest -s /tmp/api_server
+      run: docker run -v /tmp/results:/tmp/results -v `pwd`:/tmp/ pytest /usr/local/bin/pytest --html=/tmp/results/results.html -s /tmp/api_server
+    - name: Archive tests results
+  	  uses: actions/upload-artifact@v1
+   	  with:
+  	    name: tests-report
+  	    path: /tmp/results/results.html
