@@ -16,6 +16,6 @@ jobs:
       run: docker run -v /tmp/results:/tmp/results -v `pwd`:/tmp/ pytest /usr/local/bin/pytest --html=/tmp/results/results.html -s /tmp/api_server
     - name: Archive tests results
   	  uses: actions/upload-artifact@v1
-   	  with:
-  	    name: tests-report
+      with:
+        name: tests-report
   	    path: /tmp/results/results.html
