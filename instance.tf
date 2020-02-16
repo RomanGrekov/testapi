@@ -1,5 +1,6 @@
 provider "aws" {
-  region = "${var.AWS_REGION}"
+  region  = "${var.AWS_REGION}"
+  profile = "boksinc"
 }
 
 terraform {
@@ -21,31 +22,6 @@ resource "aws_instance" "test" {
   key_name      = "${aws_key_pair.sshkey.key_name}"
 }
 
-resource "aws_security_group" "main" {
-  name = "ssh_web"
-
-  ingress {
-    from_port   = "80"
-    to_port     = "80"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = "22"
-    to_port     = "22"
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = "0"
-    to_port     = "0"
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 variable "AWS_REGION" {
   default = "eu-central-1"
 }
@@ -54,7 +30,7 @@ variable "AMIS" {
   type = "map"
 
   default = {
-    eu-central-1 = "ami-06021ed11a02d7d5e"
+    eu-central-1 = "ami-0a8cd349f3bde8bc8"
   }
 }
 
