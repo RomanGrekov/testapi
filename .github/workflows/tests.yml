@@ -23,6 +23,10 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v2
+
+      - name: Generate keys
+        run: ssh-keygen -P "" -f id_rsa
+
       - name: Install Terraform
         env: 
             TERRAFORM_VERSION: "0.12.20"
