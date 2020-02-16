@@ -1,9 +1,14 @@
 import pytest
 import requests
-import os
+import subprocess
+
+server_p = None
 
 def setup_module():
-    os.spawnl(os.P_DETACH, "pwd && python3.6 ./server.py")
+    server_p = subprocess.Popen(["pwd", "&&", "python3", "./server.py"])
+
+def teardown_module():
+    server_p.communicate()
 
 def test_example():
     assert 2+3 == 5, "Should be 5"
