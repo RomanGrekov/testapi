@@ -1,10 +1,10 @@
-name: Docker Image CI
+name: Running tests
 
 on: [push]
 
 jobs:
 
-  build:
+  testing:
 
     runs-on: ubuntu-latest
 
