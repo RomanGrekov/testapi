@@ -1,0 +1,16 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: python:3.6.10-buster
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag pytest:latest
+    - name: Start tests
+      run: docker run -ti -v `pwd`:/tmp/ pytest /usr/local/bin/pytest /tmp/api_server
