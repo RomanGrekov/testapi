@@ -13,4 +13,4 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag pytest:latest
     - name: Start tests
-      run: docker run -v `pwd`:/tmp/ pytest /usr/local/bin/pytest /tmp/api_server
+      run: docker run -v `pwd`:/tmp/ pytest /usr/local/bin/pytest -s /tmp/api_server
